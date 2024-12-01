@@ -1,0 +1,37 @@
+# Node.js dependencies (if applicable)
+node_modules/
+
+# Build outputs (e.g., for frontend build tools like Webpack)
+dist/
+build/
+
+# OS-specific files
+.DS_Store            # macOS specific
+Thumbs.db            # Windows specific
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env                 # Store environment variables, not for version control
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# IDE/editor files
+.vscode/             # VS Code settings
+.idea/               # JetBrains (IntelliJ, WebStorm) settings
+*.sublime-project
+*.sublime-workspace
+
+# Coverage reports (from testing tools)
+coverage/
+
+# Package-lock or yarn-lock (if you want to ignore them)
+package-lock.json    # Use this only if you're not using npm or yarn-lock for consistency
+yarn.lock            # Same for yarn users
