@@ -5,16 +5,10 @@ const LocalStrategy = require('passport-local').Strategy;
 let connectdb = require('./config/db');
 const User = require('./models/usermodels');
 const path = require('path');
-<<<<<<< HEAD
-const connectdb=require('./config/db')
-const port=process.env.port || 3000;
-=======
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-const twilio = require('twilio');
 dotenv.config();
 let app = express();
->>>>>>> 845dfe23aca70f904605f4facd2c76a5de75d789
 
 connectdb();
 
@@ -68,20 +62,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// const authenticateSession = (req, res, next) => {
-//   if (!req.session.user) {
-//     console.log('Authentication session');
-//     return res.redirect('/login');  // Redirect to login page if not authenticated
-//   }
-//   next();  // Continue if authenticated
-// };
-
-<<<<<<< HEAD
-const app =express();
-connectdb();
-=======
->>>>>>> 845dfe23aca70f904605f4facd2c76a5de75d789
-
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -89,66 +69,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Set up EJS as the view engine
 app.set('view engine', 'ejs');
 
-app.get('/',  (req, res) => {
+app.get('/', async (req, res) => {
   res.render('index');
 });
-
-app.get('/booking',isAuthenticated,(req, res) => {
-  res.render('form');
-})
 
 app.get('/login', async (req, res) => {
   res.render('login');
 });
-function isAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();  // If user is authenticated, proceed to the route handler
-  }
-  res.redirect('/login');  // Redirect to login page if not authenticated
-}
 
 app.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login' }),
   function(req, res) {
     res.redirect('/');
-  });
-
- const accountSid = process.env.TWILIO_ACCOUNT_SID;  // Account SID from .env file
-const authToken = process.env.TWILIO_AUTH_TOKEN;    // Auth Token from .env file
-const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;  // Twilio phone number from .env file
-
-const client = new twilio(accountSid, authToken);
-
-app.use(bodyParser.json());
-
-// Function to send SMS
-function sendBookingConfirmation(toPhoneNumber) {
-    client.messages
-        .create({
-            body: 'Your booking is confirmed!',
-            from: 6205840092,  // Use Twilio phone number from .env
-            to: toPhoneNumber
-        })
-        .then((message) => console.log('Message sent: ', message.sid))
-        .catch((error) => console.error('Error: ', error));
-}
-
-
-
-  // app.get('/auth/status', (req, res) => {
-  //   if (req.session.user) {
-  //     res.json({ loggedIn: true, user: req.session.user });
-  //   } else {
-  //     res.json({ loggedIn: false });
-  //   }
-  // });
-
-  app.get('/current_user', (req, res) => {
-    if (req.isAuthenticated()) {
-      res.json({ loggedIn: true, username: req.user.username });
-    } else {
-      res.json({ loggedIn: false });
-    }
   });
 
   app.post('/register', async (req, res) => {
@@ -193,18 +125,6 @@ function sendBookingConfirmation(toPhoneNumber) {
       res.status(500).send('Something went wrong.');
     }
   })
-
-  app.post('/send-confirmation', (req, res) => {
-    const phoneNumber = req.body.phone; 
-
-
-    if (phoneNumber) {
-        sendBookingConfirmation(phoneNumber);  // Call function to send SMS
-        res.status(200).json({ message: 'Booking confirmation sent' });  // Send success response
-    } else {
-        res.status(400).json({ error: 'Phone number is required' });  // If phone number not provided
-    }
-});
 
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
