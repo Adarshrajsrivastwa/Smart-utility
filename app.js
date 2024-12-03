@@ -5,11 +5,16 @@ const LocalStrategy = require('passport-local').Strategy;
 let connectdb = require('./config/db');
 const User = require('./models/usermodels');
 const path = require('path');
+<<<<<<< HEAD
+const connectdb=require('./config/db')
+const port=process.env.port || 3000;
+=======
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const twilio = require('twilio');
 dotenv.config();
 let app = express();
+>>>>>>> 845dfe23aca70f904605f4facd2c76a5de75d789
 
 connectdb();
 
@@ -71,6 +76,11 @@ app.use(passport.session());
 //   next();  // Continue if authenticated
 // };
 
+<<<<<<< HEAD
+const app =express();
+connectdb();
+=======
+>>>>>>> 845dfe23aca70f904605f4facd2c76a5de75d789
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
