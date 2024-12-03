@@ -2,11 +2,12 @@
 const express=require('express');
 const mongoose=require('mongoose');
 const path = require('path');
+const connectdb=require('./config/db')
 const port=process.env.port || 3000;
 
 
 const app =express();
-con
+connectdb();
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
