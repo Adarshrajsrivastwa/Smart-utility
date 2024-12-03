@@ -7,6 +7,7 @@ const User = require('./models/usermodels');
 const path = require('path');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
+const twilio = require('twilio');
 dotenv.config();
 let app = express();
 
@@ -62,6 +63,15 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// const authenticateSession = (req, res, next) => {
+//   if (!req.session.user) {
+//     console.log('Authentication session');
+//     return res.redirect('/login');  // Redirect to login page if not authenticated
+//   }
+//   next();  // Continue if authenticated
+// };
+
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -69,18 +79,46 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Set up EJS as the view engine
 app.set('view engine', 'ejs');
 
-app.get('/', async (req, res) => {
+app.get('/',  (req, res) => {
   res.render('index');
 });
+
+app.get('/booking',isAuthenticated,(req, res) => {
+  res.render('form');
+})
 
 app.get('/login', async (req, res) => {
   res.render('login');
 });
+function isAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();  // If user is authenticated, proceed to the route handler
+  }
+  res.redirect('/login');  // Redirect to login page if not authenticated
+}
 
 app.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login' }),
   function(req, res) {
     res.redirect('/');
+  });
+
+
+
+  // app.get('/auth/status', (req, res) => {
+  //   if (req.session.user) {
+  //     res.json({ loggedIn: true, user: req.session.user });
+  //   } else {
+  //     res.json({ loggedIn: false });
+  //   }
+  // });
+
+  app.get('/current_user', (req, res) => {
+    if (req.isAuthenticated()) {
+      res.json({ loggedIn: true, username: req.user.username });
+    } else {
+      res.json({ loggedIn: false });
+    }
   });
 
   app.post('/register', async (req, res) => {

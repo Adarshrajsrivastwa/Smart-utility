@@ -15,16 +15,12 @@
             <ul class="navbar-list">
 
                 <li><img class="logo" src="/photo/logo.webp" alt=""></li>
-                <li><img class="logo" src="/photo/logo.webp" alt="" ></li>
-
-                <li><img class="logo" src="logo.webp" alt=""></li>
-                <li><img class="logo" src="/photo/logo.webp" alt=""></li>
-                <li><img class="logo" src="logo.webp" alt="" ></li>
-                <li class="navbar-item"><a href="#home">Home</a></li>
-                <li class="navbar-item"><a href="#services">Services</a></li>
-                <li class="navbar-item"><a href="#contact">Contact</a></li>
-                <li class="navbar-item"><a href="/login" class="signin">Sign In</a></li>
+                <li class="navbar-item"><a href="#">Home</a></li>
+                <li class="navbar-item"><a href="#">Services</a></li>
+                <li class="navbar-item"><a href="#">Contact</a></li>
             </ul>
+          
+            <button class="btn login-btn"><a href="/login">Login</a></button>
         </nav>
     </header>
     <main>
@@ -41,18 +37,18 @@
             <div class="pcard">
                 <img class="pimg" src="/photo/plumber.webp" alt="">
                 <h3 class="text">Need a plumber fast? We’ve got you covered! Whether it's a leaking faucet, a clogged drain, or a full system installation, our licensed professionals are here to provide fast, affordable, and quality plumbing solutions.</h3>
-                <button class="btn">BOOK NOW</button>
+                <a href="/booking"><button class="btn">BOOK NOW</button></a>
             </div>
             <div class="pcard">
                 <img class="pimg" src="/photo/electrician.jpg" alt="">
                 <!-- <img class="eimg" src="/photo/electrician.jpg" alt=""> -->
                 <h3 class="text">Need a reliable electrician? Whether it’s a minor repair or a major electrical installation, our certified professionals are here to help. We offer safe, efficient, and affordable electrical solutions for homes and businesses.</h3>
-                <button class="btn">BOOK NOW</button>
+                <a href="/booking"><button class="btn">BOOK NOW</button></a>
             </div>
             <div class="pcard">
                 <img class="cimg" src="/photo/cleaner.jpeg" alt="">
                 <h3 class="text">Looking for a spotless home or office? Our trusted cleaning experts are ready to tackle the job, big or small. From regular cleaning to deep cleans of homes,offices or workplace, we offer top-quality services tailored to your needs.</h3>
-                <button class="btn">BOOK NOW</button>
+                <a href="/booking"><button class="btn">BOOK NOW</button></a>
             </div>
         </div>
         <!--FAQ-->
@@ -109,6 +105,22 @@
     </div>
     </div>
     </footer>
+
+    <script>
+           function checkLoginStatus() {
+  fetch('/current_user')
+    .then(response => response.json())
+    .then(data => {
+      if (data.loggedIn) {
+        document.querySelector('.login-btn').classList.add('hidden'); // Hide login button
+        // document.getElementById('profile-menu').classList.remove('hidden'); // Show profile menu
+      }
+    })
+    .catch(error => {
+      console.error('Error checking login status:', error);
+    });
+}
+    </script>
 
 </body>
 

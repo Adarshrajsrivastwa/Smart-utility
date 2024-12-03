@@ -13,10 +13,24 @@
   /* Navbar container */
   .navbar {
     background-color: rgb(215, 214, 214);
-    padding: 10px 20px;
+    padding-left: 5vw;
     text-align: center;
+    display: flex;
+    justify-content: baseline;
+    padding-top: 2vh;
   }
-  
+  .btn{
+  height: 5vh;
+  width: 5vw;
+  }
+  a{
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+  }
   .navbar-list {
     list-style: none;
     display: flex;
@@ -80,6 +94,9 @@
   gap: 160px;
   margin-bottom: 40px;
  } 
+ .hidden{
+  display: none;
+ }
 .pcard{
   height:493px;
   width: 350px;
