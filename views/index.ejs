@@ -13,20 +13,14 @@
     <header>
         <nav class="navbar">
             <ul class="navbar-list">
-<<<<<<< HEAD:views/index.html
-                <li><img class="logo" src="logo.webp" alt=""></li>
-=======
-<<<<<<< HEAD:views/index.ejs
+
                 <li><img class="logo" src="/photo/logo.webp" alt=""></li>
-=======
-                <li><img class="logo" src="logo.webp" alt="" ></li>
->>>>>>> 3407645cf2fca3ce74b3c4cd7f948d5f0207d761:views/index.html
->>>>>>> b8be089b9df95ea74086a3edd7c9ac0430ae18e9:views/index.ejs
-                <li class="navbar-item"><a href="#home">Home</a></li>
-                <li class="navbar-item"><a href="#services">Services</a></li>
-                <li class="navbar-item"><a href="#contact">Contact</a></li>
-                <li class="navbar-item"><a href="login.html" class="signin">Sign In</a></li>
+                <li class="navbar-item"><a href="#">Home</a></li>
+                <li class="navbar-item"><a href="#">Services</a></li>
+                <li class="navbar-item"><a href="#">Contact</a></li>
             </ul>
+          
+            <button class="btn login-btn"><a href="/login">Login</a></button>
         </nav>
     </header>
     <main>
@@ -43,21 +37,18 @@
             <div class="pcard">
                 <img class="pimg" src="/photo/plumber.webp" alt="">
                 <h3 class="text">Need a plumber fast? We’ve got you covered! Whether it's a leaking faucet, a clogged drain, or a full system installation, our licensed professionals are here to provide fast, affordable, and quality plumbing solutions.</h3>
-                <button class="btn">BOOK NOW</button>
+                <a href="/booking"><button class="btn">BOOK NOW</button></a>
             </div>
             <div class="pcard">
-<<<<<<< HEAD:views/index.ejs
                 <img class="pimg" src="/photo/electrician.jpg" alt="">
-=======
-                <img class="eimg" src="electrician.jpg" alt="">
->>>>>>> 22adbffa0086d1efb1f92a57a5aaa71550ca32e6:views/index.html
+                <!-- <img class="eimg" src="/photo/electrician.jpg" alt=""> -->
                 <h3 class="text">Need a reliable electrician? Whether it’s a minor repair or a major electrical installation, our certified professionals are here to help. We offer safe, efficient, and affordable electrical solutions for homes and businesses.</h3>
-                <button class="btn">BOOK NOW</button>
+                <a href="/booking"><button class="btn">BOOK NOW</button></a>
             </div>
             <div class="pcard">
-                <img class="cimg" src="cleaner.jpeg" alt="">
+                <img class="cimg" src="/photo/cleaner.jpeg" alt="">
                 <h3 class="text">Looking for a spotless home or office? Our trusted cleaning experts are ready to tackle the job, big or small. From regular cleaning to deep cleans of homes,offices or workplace, we offer top-quality services tailored to your needs.</h3>
-                <button class="btn">BOOK NOW</button>
+                <a href="/booking"><button class="btn">BOOK NOW</button></a>
             </div>
         </div>
         <!--FAQ-->
@@ -102,11 +93,11 @@
         <div class="foot1">
         <h2 class="t1">Follow us on</h2>
             <ul>
-                <li><img src="instagram.png" alt=""></li>
-                <li><img src="telegram.png" alt=""></li>
-                <li><img src="twitter.png" alt=""></li>
-                <li><img src="youtube.png" alt=""></li>
-                <li><img src="facebook.png" alt=""></li>
+                <li><img src="/photo/instagram.png" alt=""></li>
+                <li><img src="/photo/telegram.png" alt=""></li>
+                <li><img src="/photo/twitter.png" alt=""></li>
+                <li><img src="/photo/youtube.png" alt=""></li>
+                <li><img src="/photo/facebook.png" alt=""></li>
             </ul>
             </div>
         
@@ -114,6 +105,22 @@
     </div>
     </div>
     </footer>
+
+    <script>
+           function checkLoginStatus() {
+  fetch('/current_user')
+    .then(response => response.json())
+    .then(data => {
+      if (data.loggedIn) {
+        document.querySelector('.login-btn').classList.add('hidden'); // Hide login button
+        // document.getElementById('profile-menu').classList.remove('hidden'); // Show profile menu
+      }
+    })
+    .catch(error => {
+      console.error('Error checking login status:', error);
+    });
+}
+    </script>
 
 </body>
 

@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');  // Corrected the `require` syntax
+const mongoose = require('mongoose'); 
+require('dotenv').config(); 
 
 const connectdb = async () => {
     try {
@@ -8,4 +9,6 @@ const connectdb = async () => {
         console.error('Failed to connect to MongoDB:', error.message);
     }
 };
+
+// Using CommonJS module.exports instead of export default
 module.exports = connectdb;
