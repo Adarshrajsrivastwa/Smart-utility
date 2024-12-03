@@ -103,6 +103,26 @@ app.post('/login',
     res.redirect('/');
   });
 
+ const accountSid = process.env.TWILIO_ACCOUNT_SID;  // Account SID from .env file
+const authToken = process.env.TWILIO_AUTH_TOKEN;    // Auth Token from .env file
+const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;  // Twilio phone number from .env file
+
+const client = new twilio(accountSid, authToken);
+
+app.use(bodyParser.json());
+
+// Function to send SMS
+function sendBookingConfirmation(toPhoneNumber) {
+    client.messages
+        .create({
+            body: 'Your booking is confirmed!',
+            from: 6205840092,  // Use Twilio phone number from .env
+            to: toPhoneNumber
+        })
+        .then((message) => console.log('Message sent: ', message.sid))
+        .catch((error) => console.error('Error: ', error));
+}
+
 
 
   // app.get('/auth/status', (req, res) => {
@@ -163,6 +183,18 @@ app.post('/login',
       res.status(500).send('Something went wrong.');
     }
   })
+
+  app.post('/send-confirmation', (req, res) => {
+    const phoneNumber = req.body.phone; 
+
+
+    if (phoneNumber) {
+        sendBookingConfirmation(phoneNumber);  // Call function to send SMS
+        res.status(200).json({ message: 'Booking confirmation sent' });  // Send success response
+    } else {
+        res.status(400).json({ error: 'Phone number is required' });  // If phone number not provided
+    }
+});
 
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
