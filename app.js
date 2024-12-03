@@ -7,6 +7,8 @@ const User = require('./models/usermodels');
 const path = require('path');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
+const twilio = require('twilio');
+
 dotenv.config();
 let app = express();
 
@@ -73,6 +75,25 @@ app.get('/', async (req, res) => {
   res.render('index');
 });
 
+const accountSid = process.env.TWILIO_ACCOUNT_SID;  // Account SID from .env file
+const authToken = process.env.TWILIO_AUTH_TOKEN;    // Auth Token from .env file
+const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;  // Twilio phone number from .env file
+
+const client = new twilio(accountSid, authToken);
+
+app.use(bodyParser.json());
+
+// Function to send SMS
+function sendBookingConfirmation(toPhoneNumber) {
+    client.messages
+        .create({
+            body: 'Your booking is confirmed!',
+            from: 6205840092,  // Use Twilio phone number from .env
+            to: toPhoneNumber
+        })
+        .then((message) => console.log('Message sent: ', message.sid))
+        .catch((error) => console.error('Error: ', error));
+}
 app.get('/login', async (req, res) => {
   res.render('login');
 });
@@ -125,6 +146,30 @@ app.post('/login',
       res.status(500).send('Something went wrong.');
     }
   })
+
+  app.get('/booking',isAuthenticated,(req, res) => {
+    res.render('form');
+  })
+
+  function isAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return next();  // If user is authenticated, proceed to the route handler
+    }
+    res.redirect('/login');  // Redirect to login page if not authenticated
+  }
+
+  app.post('/send-confirmation', (req, res) => {
+    const phoneNumber = req.body.phone; 
+
+
+    if (phoneNumber) {
+        sendBookingConfirmation(phoneNumber);  // Call function to send SMS
+        res.status(200).json({ message: 'Booking confirmation sent' });  // Send success response
+    } else {
+        res.status(400).json({ error: 'Phone number is required' });  // If phone number not provided
+    }
+});
+  
 
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
